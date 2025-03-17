@@ -1,1 +1,528 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John's Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #333;
+            --secondary: #fff;
+            --accent: #007bff;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #eee;
+            --secondary: #1a1a1a;
+            --accent: #66b3ff;
+            --glass-bg: rgba(26, 26, 26, 0.3);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--secondary);
+            color: var(--primary);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url('/api/placeholder/1920/1080') center/cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Navigation */
+        .glass-nav {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            padding: 1rem 0;
+            top: 0;
+            z-index: 100;
+        }
+
+        .glass-nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .glass-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-content {
+            margin-top: 60px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        /* About Section Styles */
+        #about, #skills, #projects, #contact {
+            padding: 4rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #about h2, #skills h2, #projects h2, #contact h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+
+        .about-content, .skills-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #about p, .skills-content p {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--primary);
+            max-width: 600px;
+        }
+
+        /* Skills Section Styles */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background-color: #f0f0f0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .skill-item {
+            background-color: #3a3a3a;
+            color: #eee;
+        }
+
+        /* Projects Section Styles */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .project {
+            background: var(--secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project:hover {
+            transform: translateY(-5px);
+        }
+
+        .project img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid #eee;
+            loading: lazy;
+        }
+
+        .project h3 {
+            margin: 1rem;
+            color: var(--primary);
+        }
+
+        .project p {
+            margin: 0 1rem 1.5rem;
+            color: var(--primary);
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .project-link {
+            display: block;
+            text-align: center;
+            padding: 1rem;
+            background-color: #f0f0f0;
+            color: var(--primary);
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .project-link:hover {
+            background-color: #e0e0e0;
+        }
+
+        [data-theme="dark"] .project-link {
+            color: #eee;
+            background-color: #333;
+        }
+
+        [data-theme="dark"] .project-link:hover {
+            background-color: #444;
+        }
+
+        /* Contact Section Styles */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        input,
+        textarea {
+            padding: 0.8rem;
+                        border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        button[type="submit"] {
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem;
+            border: none;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(45deg);
+            transition: transform 0.3s ease;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--secondary);
+            color: var(--primary);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .social-icons {
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: var(--primary);
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 768px) {
+            .about-content, .skills-content {
+                flex-direction: row;
+                text-align: left;
+                justify-content: center;
+            }
+
+            #about p, .skills-content p {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .projects-container {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glass-nav ul {
+                gap: 0.5rem;
+            }
+
+            .glass-nav a {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <nav class="glass-nav" aria-label="Main Navigation">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="hero-content">
+            <h1>John's Portfolio</h1>
+            <p class="tagline">Turning ideas into digital solutions</p>
+            <a href="#projects" class="cta-btn">View My Work</a>
+        </div>
+    </header>
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <img src="myport.jpg" alt="Profile" class="profile-img">
+                <p>A passionate developer creating web solutions with modern technologies. I specialize in building responsive, user-friendly websites and applications that solve real-world problems.</p>
+            </div>
+        </section>
+        <section id="skills">
+            <h2>My Skills</h2>
+            <div class="skills-content">
+                <p>Here are some of the technologies and skills I'm proficient in:</p>
+                <ul class="skills-list">
+                    <li class="skill-item">HTML5</li>
+                    <li class="skill-item">CSS3</li>
+                    <li class="skill-item">JavaScript</li>
+                    <li class="skill-item">React</li>
+                    <li class="skill-item">Node.js</li>
+                    <li class="skill-item">Python</li>
+                    <li class="skill-item">Git</li>
+                    <li class="skill-item">Responsive Design</li>
+                </ul>
+            </div>
+        </section>
+        <section id="projects">
+            <h2>My Projects</h2>
+            <div class="projects-container">
+                <div class="project">
+                    <img src="/api/placeholder/400/300" alt="E-Commerce Platform">
+                    <h3>E-Commerce Platform</h3>
+                    <p>Modern shopping website with payment integration, product management, and user authentication.</p>
+                    <a href="#" class="project-link">View Project</a>
+                </div>
+                <div class="project">
+                    <img src="/api/placeholder/400/300" alt="Task Management App">
+                    <h3>Task Management App</h3>
+                    <p>React-based application for team collaboration and project task organization.</p>
+                    <a href="#" class="project-link">View Project</a>
+                </div>
+                <div class="project">
+                    <img src="/api/placeholder/400/300" alt="Portfolio Website">
+                    <h3>Portfolio Website</h3>
+                    <p>Responsive personal portfolio showcasing web development projects and skills.</p>
+                    <a href="#" class="project-link">View Project</a>
+                </div>
+            </div>
+        </section>
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <form class="contact-form" id="contactForm">
+                <div id="form-message" style="display: none;"></div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 John's Portfolio. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="#" target="_blank"><i class="fas fa-file-pdf"></i></a>
+        </div>
+    </footer>
+    <button class="theme-toggle" aria-label="Toggle dark mode">🌓</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const themeToggle = document.querySelector('.theme-toggle');
+            let isDark = localStorage.getItem('theme') === 'dark';
+
+            if (isDark) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '🌞';
+            }
+
+            themeToggle.addEventListener('click', () => {
+                isDark = !isDark;
+                document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                themeToggle.textContent = isDark ? '🌞' : '🌓';
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+
+            const form = document.getElementById("contactForm");
+            form.addEventListener("submit", function(event) {                event.preventDefault();
+
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const message = document.getElementById("message").value.trim();
+                const formMessage = document.getElementById('form-message');
+
+                if (!name || !email || !message) {
+                    formMessage.textContent = "Please fill in all required fields.";
+                    formMessage.style.display = 'block';
+                    formMessage.style.color = "red";
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    formMessage.textContent = "Please enter a valid email address.";
+                    formMessage.style.display = 'block';
+                    formMessage.style.color = "red";
+                    return;
+                }
+
+                formMessage.textContent = "Message sent successfully!";
+                formMessage.style.display = 'block';
+                formMessage.style.color = "green";
+                form.reset();
+            });
+        });
+    </script>
+</body>
+</html>
+
+
